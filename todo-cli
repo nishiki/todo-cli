@@ -1,0 +1,152 @@
+#!/usr/bin/ruby
+# author: nishiki
+# mail: nishiki@yaegashi.fr
+
+require 'rubygems'
+require 'optparse'
+require 'pathname'
+require 'locale'
+require 'set'
+require 'i18n'
+require 'highline/import'
+require 'colorize'
+
+APP_ROOT = File.dirname(Pathname.new(__FILE__).realpath)
+require "#{APP_ROOT}/lib/TodoCli"
+
+# --------------------------------------------------------- #
+# Set local
+# --------------------------------------------------------- #
+
+lang = Locale::Tag.parse(ENV['LANG']).to_simple.to_s[0..1]
+
+if defined?(I18n.enforce_available_locales)
+	I18n.enforce_available_locales = true
+end
+
+I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+I18n.load_path      = Dir["#{APP_ROOT}/i18n/*.yml"]
+I18n.default_locale = :en
+I18n.locale         = lang.to_sym
+
+# --------------------------------------------------------- #
+# Options
+# --------------------------------------------------------- #
+
+options = {}
+
+OptionParser.new do |opts|
+	opts.banner = "#{I18n.t('option.usage')}: todo-cli [options]"
+
+	opts.on('-a', '--add', I18n.t('option.add')) do
+		options[:add] = true
+	end
+
+	opts.on('-s', '--show ID', I18n.t('option.show')) do |id|
+		options[:show] = id
+	end
+
+	opts.on('-u', '--update ID', I18n.t('option.update')) do |id|
+		options[:update] = id
+	end
+
+	opts.on('-d', '--delete ID', I18n.t('option.delete')) do |id|
+		options[:delete] = id
+	end
+end.parse!
+
+# --------------------------------------------------------- #
+# Main
+# --------------------------------------------------------- #
+
+todo = TodoCli.new
+
+if not todo.load
+	puts "#{I18n.t('diplay.error')} #1: #{todo.error_msg}"
+	exit(3)
+end
+
+# Add a new task
+# --------------------------------------------------------- #
+
+if not options[:add].nil?
+	task =  {}
+
+	puts I18n.t('form.add.title')
+	puts '--------------------'
+	task[:name]    = ask(I18n.t('form.add.name')).to_s
+	task[:group]   = ask(I18n.t('form.add.group')).to_s
+	task[:comment] = ask(I18n.t('form.add.comment')).to_s
+
+	if todo.add(task)
+		if todo.save
+			puts I18n.t('success.add').green
+		else
+			puts "#{I18n.t('diplay.error')} #2: #{todo.error_msg}".red
+		end
+	else
+		puts "#{I18n.t('diplay.error')} #3: #{todo.error_msg}".red
+	end
+
+# Show all data a taks
+# --------------------------------------------------------- #
+
+elsif not options[:show].nil?
+	task = todo.show(options[:show])
+	if task.empty?
+		puts "#{I18n.t('diplay.error')} #4: #{todo.error_msg}".red
+	else
+		puts '--------------------'
+		puts "Id: #{task['id']}"
+		puts "#{I18n.t('display.name')}: #{task['name']}"
+		puts "#{I18n.t('display.group')}: #{task['group']}"
+		puts "#{I18n.t('display.comment')}: #{task['comment']}"
+		puts "#{I18n.t('display.date_insert')}: #{task['date_insert']}"
+		puts "#{I18n.t('display.date_update')}: #{task['date_update']}"
+	end
+
+# Update a task
+# --------------------------------------------------------- #
+
+elsif not options[:update].nil?
+	if not todo.save
+		puts "#{I18n.t('diplay.error')} #5: #{todo.error_msg}".red
+	else
+		puts I18n.t('success.update').green
+	end
+
+# Delete a task
+# --------------------------------------------------------- #
+
+elsif not options[:delete].nil?
+	if todo.delete(options[:delete])
+		if todo.save
+			puts I18n.t('success.delete').green
+		else
+			puts "#{I18n.t('display.error')} #6: #{todo.error_msg}".red
+		end
+		puts "#{I18n.t('display.error')} #7: #{todo.error_msg}".red
+	end
+
+# List all tasks
+# --------------------------------------------------------- #
+
+else
+	puts "ID  NAME     DATE"
+	todo.list.each do |t|
+		task = t[1]
+
+		case task['state']
+		when 'running'
+			puts "##{task['id']} #{task['name']} #{task['date_insert']}".orange
+		when 'finished'
+			puts "##{task['id']} #{task['name']} #{task['date_insert']}".green
+		when 'stopped'
+			puts "##{task['id']} #{task['name']} #{task['date_insert']}".red
+		else
+			puts "##{task['id']} #{task['name']} #{task['date_insert']}"
+		end
+	end
+end
+
+exit(0)
