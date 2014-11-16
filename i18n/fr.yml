@@ -1,3 +1,30 @@
 fr:
-  diplay:
+  display:
     error: 'Erreur'
+    name: 'Nom'
+    group: 'Groupe'
+    comment: 'Commentaire'
+    date_insert: "Date d'insertion"
+    date_update: 'Dernière date de modification'
+  error:
+    id_unknown: "L'identifiant %{id} est inconnu!"
+    name_empty: "Le champs nom est vide, ce champs ne peut être vide!"
+    load: "Impossible de charger les données!"
+    save: "Impossible de sauver les données!"
+
+  sucess:
+    add: 'La tâche a bien été ajoutée!'
+    update: 'La tache %{id} a bien été mise à jour!'
+    delete: 'La tâche %{id} a bien été supprimée!' 
+  option:
+    add: "Ajouter une nouvelle tâche"
+    show: "Afficher toutes les informations d'une tâche"
+    update: 'Mettre à jour une tâche'
+    delete: 'Supprimer une tâche'
+  form:
+    add:
+      title: "Création d'une nouvelle tâche"
+      name: 'Nom (requis):'
+      group: 'Groupe: '
+      comment: 'Commentaire: '
+
