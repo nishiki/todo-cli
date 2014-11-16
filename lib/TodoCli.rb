@@ -39,7 +39,7 @@ class TodoCli
 	# @rtrn: false if the id is unknown
 	def add(options={})
 		if options[:name].to_s.empty?
-			@error_msg = I18n.t('error.name.empty')
+			@error_msg = I18n.t('error.name_empty')
 			return false
 		end
 
@@ -63,7 +63,7 @@ class TodoCli
 		id = id.to_i
 
 		if not @tasks.has_key?(id)
-			@error_msg = I18n.t('error.id.unknown')
+			@error_msg = I18n.t('error.id_unknown', id: id)
 			return false
 		end
 
@@ -78,7 +78,7 @@ class TodoCli
 		id = id.to_i
 
 		if not @tasks.has_key?(id)
-			@error_msg = I18n.t('error.id.unknown')
+			@error_msg = I18n.t('error.id_unknown', id: id)
 			return false
 		end
 
@@ -104,7 +104,7 @@ class TodoCli
 	def show(id)
 		id = id.to_i
 		if not @tasks.has_key?(id)
-			@error_msg = I18n.t('error.id.unknown')
+			@error_msg = I18n.t('error_id.unknown', id: id)
 			return {}
 		end
 

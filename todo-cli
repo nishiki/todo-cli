@@ -125,6 +125,7 @@ elsif not options[:delete].nil?
 		else
 			puts "#{I18n.t('display.error')} #6: #{todo.error_msg}".red
 		end
+	else
 		puts "#{I18n.t('display.error')} #7: #{todo.error_msg}".red
 	end
 
