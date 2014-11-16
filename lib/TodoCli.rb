@@ -48,7 +48,7 @@ class TodoCli
 		                      'name'          => options[:name],
 		                      'comment'       => options[:comment],
 		                      'date_deadline' => options[:date_deadline],
-		                      'date_insert'   => Time.now,
+		                      'date_create'   => Time.now,
 		                     }
 		              }
 		             )
@@ -90,7 +90,7 @@ class TodoCli
 		                      'name'          => name,
 		                      'comment'       => comment,
 		                      'date_deadline' => date_deadline,
-		                      'date_insert'   => @tasks[id]['date_insert'],
+		                      'date_create'   => @tasks[id]['date_create'],
 		                      'date_update'   => Time.now,
 		                     }
 		              }

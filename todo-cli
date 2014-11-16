@@ -101,7 +101,7 @@ elsif not options[:show].nil?
 		puts "#{I18n.t('display.name')}: #{task['name']}"
 		puts "#{I18n.t('display.group')}: #{task['group']}"
 		puts "#{I18n.t('display.comment')}: #{task['comment']}"
-		puts "#{I18n.t('display.date_insert')}: #{task['date_insert']}"
+		puts "#{I18n.t('display.date_create')}: #{task['date_create']}"
 		puts "#{I18n.t('display.date_update')}: #{task['date_update']}"
 	end
 
@@ -139,13 +139,13 @@ else
 
 		case task['state']
 		when 'running'
-			puts "##{task['id']} #{task['name']} #{task['date_insert']}".orange
+			puts "##{task['id']} #{task['name']} #{task['date_create']}".orange
 		when 'finished'
-			puts "##{task['id']} #{task['name']} #{task['date_insert']}".green
+			puts "##{task['id']} #{task['name']} #{task['date_create']}".green
 		when 'stopped'
-			puts "##{task['id']} #{task['name']} #{task['date_insert']}".red
+			puts "##{task['id']} #{task['name']} #{task['date_create']}".red
 		else
-			puts "##{task['id']} #{task['name']} #{task['date_insert']}"
+			puts "##{task['id']} #{task['name']} #{task['date_create']}"
 		end
 	end
 end

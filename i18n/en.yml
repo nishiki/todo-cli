@@ -4,7 +4,7 @@ en:
     name: 'Name'
     group: 'Group'
     comment: 'Comment'
-    date_insert: 'Insertion date'
+    date_create: 'Create date'
     date_update: 'Last update date'
   error:
     id_unknown: "The id %{id} is unknown!"

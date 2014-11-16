@@ -4,7 +4,7 @@ fr:
     name: 'Nom'
     group: 'Groupe'
     comment: 'Commentaire'
-    date_insert: "Date d'insertion"
+    date_create: 'Date de création'
     date_update: 'Dernière date de modification'
   error:
     id_unknown: "L'identifiant %{id} est inconnu!"
