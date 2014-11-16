@@ -6,25 +6,33 @@ en:
     comment: 'Comment'
     date_create: 'Create date'
     date_update: 'Last update date'
+
   error:
     id_unknown: "The id %{id} is unknown!"
     name_empty: "The field name is empty, this field can't be blank!"
     load: "Can't load data from file!"
     save: "Can't save data in the file!"
 
-  sucess:
+  success:
     add: 'The task has been successfully added!'
     update: 'The task %{id} has been successfully updated!'
     delete: 'The task %{id} has been successfully deleted!' 
+
   option:
     add: 'Add a new task'
     show: "Show all task's information"
     update: 'Update a task'
     delete: 'Delete a task'
+
   form:
     add:
       title: 'Add a new task: '
       name: "The task's name (require): "
       group: "The task's group: "
       comment: 'Comment your task: '
+    update:
+      title: 'Update a task'
+      name: 'Name [%{name}]: '
+      group: 'Group [%{group}]: '
+      comment: 'Comment [%{comment}]: '
 

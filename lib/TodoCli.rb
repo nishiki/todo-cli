@@ -82,14 +82,12 @@ class TodoCli
 			return false
 		end
 
-		name          = @tasks[id]['name']          if options[:name].to_sempty?
-		comment       = @tasks[id]['comment']       if options[:comment].to_s.empty?
-		date_deadline = @tasks[id]['date_deadline'] if options[:date_deadline].to_s.empty?
+		name          = options[:name].to_s.empty?    ? @tasks[id]['name']    : options[:name]
+		comment       = options[:comment].to_s.empty? ? @tasks[id]['comment'] : options[:comment]
 
 		@tasks.merge!({id => {'id'            => id,
 		                      'name'          => name,
 		                      'comment'       => comment,
-		                      'date_deadline' => date_deadline,
 		                      'date_create'   => @tasks[id]['date_create'],
 		                      'date_update'   => Time.now,
 		                     }

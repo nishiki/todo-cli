@@ -99,7 +99,6 @@ elsif not options[:show].nil?
 		puts '--------------------'
 		puts "Id: #{task['id']}"
 		puts "#{I18n.t('display.name')}: #{task['name']}"
-		puts "#{I18n.t('display.group')}: #{task['group']}"
 		puts "#{I18n.t('display.comment')}: #{task['comment']}"
 		puts "#{I18n.t('display.date_create')}: #{task['date_create']}"
 		puts "#{I18n.t('display.date_update')}: #{task['date_update']}"
@@ -109,10 +108,26 @@ elsif not options[:show].nil?
 # --------------------------------------------------------- #
 
 elsif not options[:update].nil?
-	if not todo.save
+	update = {}
+
+	task = todo.show(options[:update])
+	if task.empty?
 		puts "#{I18n.t('diplay.error')} #5: #{todo.error_msg}".red
 	else
-		puts I18n.t('success.update').green
+		puts I18n.t('form.update.title')
+		puts '--------------------'
+		update[:name]    = ask(I18n.t('form.update.name'   , name:    task['name'])).to_s
+		update[:comment] = ask(I18n.t('form.update.comment', comment: task['comment'])).to_s
+
+		if todo.update(task['id'], update)
+			if todo.save
+				puts I18n.t('success.update', id: task['id']).green
+			else
+				puts "#{I18n.t('diplay.error')} #6: #{todo.error_msg}".red
+			end
+		else
+			puts "#{I18n.t('diplay.error')} #7: #{todo.error_msg}".red
+		end
 	end
 
 # Delete a task
@@ -121,12 +136,12 @@ elsif not options[:update].nil?
 elsif not options[:delete].nil?
 	if todo.delete(options[:delete])
 		if todo.save
-			puts I18n.t('success.delete').green
+			puts I18n.t('success.delete', id: options[:delete]).green
 		else
-			puts "#{I18n.t('display.error')} #6: #{todo.error_msg}".red
+			puts "#{I18n.t('display.error')} #8: #{todo.error_msg}".red
 		end
 	else
-		puts "#{I18n.t('display.error')} #7: #{todo.error_msg}".red
+		puts "#{I18n.t('display.error')} #9: #{todo.error_msg}".red
 	end
 
 # List all tasks
