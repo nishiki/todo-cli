@@ -4,6 +4,7 @@
 
 require 'yaml'
 require 'i18n'
+require 'time'
 
 class TodoCli
 
@@ -43,11 +44,14 @@ class TodoCli
 			return false
 		end
 
-		id = @tasks.empty? ? 1 : @tasks.to_a.last[0] + 1
-		@tasks.merge!({id => {'id'            => id,
-		                      'name'          => options[:name],
-		                      'comment'       => options[:comment],
-		                      'date_create'   => Time.now,
+		id       = @tasks.empty?           ? 1   : @tasks.to_a.last[0] + 1
+		deadline = options[:deadline].nil? ? nil : Time.parse(options[:deadline])
+
+		@tasks.merge!({id => {'id'          => id,
+		                      'name'        => options[:name],
+		                      'deadline'    => options[:deadline],
+		                      'comment'     => options[:comment],
+		                      'date_create' => Time.now,
 		                     }
 		              }
 		             )
@@ -81,14 +85,17 @@ class TodoCli
 			return false
 		end
 
-		name          = options[:name].to_s.empty? ? @tasks[id]['name']    : options[:name]
-		comment       = options[:comment].nil?     ? @tasks[id]['comment'] : options[:comment]
+		name     = options[:name].to_s.empty? ? @tasks[id]['name']     : options[:name]
+		comment  = options[:comment].nil?     ? @tasks[id]['comment']  : options[:comment]
+		deadline = options[:deadline].nil?    ? @tasks[id]['deadline'] : options[:deadline]
+		deadline = Time.parse(deadline)
 
-		@tasks.merge!({id => {'id'            => id,
-		                      'name'          => name,
-		                      'comment'       => comment,
-		                      'date_create'   => @tasks[id]['date_create'],
-		                      'date_update'   => Time.now,
+		@tasks.merge!({id => {'id'          => id,
+		                      'name'        => name,
+		                      'deadline'    => deadline,
+		                      'comment'     => comment,
+		                      'date_create' => @tasks[id]['date_create'],
+		                      'date_update' => Time.now,
 		                     }
 		              }
 		             )

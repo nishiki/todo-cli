@@ -2,6 +2,7 @@ fr:
   display:
     error: 'Erreur'
     name: 'Nom'
+    deadline: 'Deadline'
     group: 'Groupe'
     comment: 'Commentaire'
     date_create: 'Date de création'
@@ -25,3 +26,4 @@ fr:
     delete: 'Supprimer une tâche'
     name: 'Fixer le nom' 
     comment: 'Fixer un commentaire' 
+    deadline: 'Fixer une deadline [ex: 2014-11-27 20:30:59]' 
