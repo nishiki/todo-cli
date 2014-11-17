@@ -6,6 +6,7 @@ dep-ubuntu:
 	apt-get install ruby ruby-highline ruby-i18n ruby-locale ruby-colorize
 
 configure:
+	gem install bundler
 	bundle install
 
 install:
