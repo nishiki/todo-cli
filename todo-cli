@@ -34,6 +34,7 @@ I18n.locale         = lang.to_sym
 # --------------------------------------------------------- #
 
 options = {}
+data    = {}
 
 OptionParser.new do |opts|
 	opts.banner = "#{I18n.t('option.usage')}: todo-cli [options]"
@@ -53,6 +54,14 @@ OptionParser.new do |opts|
 	opts.on('-d', '--delete ID', I18n.t('option.delete')) do |id|
 		options[:delete] = id
 	end
+
+	opts.on('-n', '--name NAME', I18n.t('option.name')) do |name|
+		data[:name] = name
+	end
+
+	opts.on('-c', '--comment COMMENT', I18n.t('option.comment')) do |comment|
+		data[:comment] = comment
+	end
 end.parse!
 
 # --------------------------------------------------------- #
@@ -62,7 +71,7 @@ end.parse!
 todo = TodoCli.new
 
 if not todo.load
-	puts "#{I18n.t('diplay.error')} #1: #{todo.error_msg}"
+	puts "#{I18n.t('display.error')} #1: #{todo.error_msg}"
 	exit(3)
 end
 
@@ -70,22 +79,14 @@ end
 # --------------------------------------------------------- #
 
 if not options[:add].nil?
-	task =  {}
-
-	puts I18n.t('form.add.title')
-	puts '--------------------'
-	task[:name]    = ask(I18n.t('form.add.name')).to_s
-	task[:group]   = ask(I18n.t('form.add.group')).to_s
-	task[:comment] = ask(I18n.t('form.add.comment')).to_s
-
-	if todo.add(task)
+	if todo.add(data)
 		if todo.save
 			puts I18n.t('success.add').green
 		else
-			puts "#{I18n.t('diplay.error')} #2: #{todo.error_msg}".red
+			puts "#{I18n.t('display.error')} #2: #{todo.error_msg}".red
 		end
 	else
-		puts "#{I18n.t('diplay.error')} #3: #{todo.error_msg}".red
+		puts "#{I18n.t('display.error')} #3: #{todo.error_msg}".red
 	end
 
 # Show all data a taks
@@ -108,26 +109,14 @@ elsif not options[:show].nil?
 # --------------------------------------------------------- #
 
 elsif not options[:update].nil?
-	update = {}
-
-	task = todo.show(options[:update])
-	if task.empty?
-		puts "#{I18n.t('diplay.error')} #5: #{todo.error_msg}".red
-	else
-		puts I18n.t('form.update.title')
-		puts '--------------------'
-		update[:name]    = ask(I18n.t('form.update.name'   , name:    task['name'])).to_s
-		update[:comment] = ask(I18n.t('form.update.comment', comment: task['comment'])).to_s
-
-		if todo.update(task['id'], update)
-			if todo.save
-				puts I18n.t('success.update', id: task['id']).green
-			else
-				puts "#{I18n.t('diplay.error')} #6: #{todo.error_msg}".red
-			end
+	if todo.update(options[:update], data)
+		if todo.save
+			puts I18n.t('success.update', id: task['id']).green
 		else
-			puts "#{I18n.t('diplay.error')} #7: #{todo.error_msg}".red
+			puts "#{I18n.t('display.error')} #6: #{todo.error_msg}".red
 		end
+	else
+		puts "#{I18n.t('display.error')} #7: #{todo.error_msg}".red
 	end
 
 # Delete a task

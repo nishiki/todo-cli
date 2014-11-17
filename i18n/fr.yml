@@ -23,16 +23,5 @@ fr:
     show: "Afficher toutes les informations d'une tâche"
     update: 'Mettre à jour une tâche'
     delete: 'Supprimer une tâche'
-
-  form:
-    add:
-      title: "Création d'une nouvelle tâche"
-      name: 'Nom (requis):'
-      group: 'Groupe: '
-      comment: 'Commentaire: '
-    update:
-      title: "Mise à jour d'une tâche"
-      name: 'Nom [%{name}]: '
-      group: 'Groupe [%{group}]: '
-      comment: 'Commentaire [%{comment}]: '
-
+    name: 'Fixer le nom' 
+    comment: 'Fixer un commentaire' 

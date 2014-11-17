@@ -23,16 +23,5 @@ en:
     show: "Show all task's information"
     update: 'Update a task'
     delete: 'Delete a task'
-
-  form:
-    add:
-      title: 'Add a new task: '
-      name: "The task's name (require): "
-      group: "The task's group: "
-      comment: 'Comment your task: '
-    update:
-      title: 'Update a task'
-      name: 'Name [%{name}]: '
-      group: 'Group [%{group}]: '
-      comment: 'Comment [%{comment}]: '
-
+    name: 'Set the name' 
+    comment: 'Set a comment' 
