@@ -6,7 +6,7 @@ fr:
     group: 'Groupe'
     comment: 'Commentaire'
     date_create: 'Date de création'
-    date_update: 'Dernière date de modification'
+    date_update: 'Dernière modification'
     nothing: "Aucune"
 
   error:

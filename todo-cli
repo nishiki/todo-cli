@@ -10,6 +10,7 @@ require 'locale'
 require 'set'
 require 'i18n'
 require 'highline/import'
+require 'colorize'
 require 'command_line_reporter'
 include CommandLineReporter
 
@@ -103,13 +104,18 @@ elsif not options[:show].nil?
 	if task.empty?
 		puts "#{I18n.t('diplay.error')} #4: #{todo.error_msg}".red
 	else
-		puts '--------------------'
-		puts "Id: #{task['id']}"
-		puts "#{I18n.t('display.name')}: #{task['name']}"
-		puts "#{I18n.t('display.deadline')}:#{task['deadline']}"
-		puts "#{I18n.t('display.comment')}: #{task['comment']}"
-		puts "#{I18n.t('display.date_create')}: #{task['date_create']}"
-		puts "#{I18n.t('display.date_update')}: #{task['date_update']}"
+		print 'ID: '.yellow
+		puts task['id']
+		print "#{I18n.t('display.name')}: ".yellow
+		puts task['name']
+		print "#{I18n.t('display.date_create')}: ".yellow
+		puts task['date_create']
+		print "#{I18n.t('display.date_update')}: ".yellow
+		puts task['date_update']
+		print "#{I18n.t('display.deadline')}: ".yellow
+		puts task['deadline']
+		print "#{I18n.t('display.comment')}: ".yellow
+		puts task['comment']
 	end
 
 # Update a task
@@ -144,7 +150,7 @@ elsif not options[:delete].nil?
 # --------------------------------------------------------- #
 
 else
-	table(:border => false) do
+	table(border: false) do
 		row(header: true, color: 'yellow') do
 			column('ID', align: 'left')
 			column(I18n.t('display.name'), width: 30, align: 'left')
