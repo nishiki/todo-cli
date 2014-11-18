@@ -7,6 +7,7 @@ en:
     comment: 'Comment'
     date_create: 'Create date'
     date_update: 'Last update date'
+    nothing: 'Nothing'
 
   error:
     id_unknown: "The id %{id} is unknown!"

@@ -10,7 +10,8 @@ require 'locale'
 require 'set'
 require 'i18n'
 require 'highline/import'
-require 'colorize'
+require 'command_line_reporter'
+include CommandLineReporter
 
 APP_ROOT = File.dirname(Pathname.new(__FILE__).realpath)
 require "#{APP_ROOT}/lib/TodoCli"
@@ -143,26 +144,35 @@ elsif not options[:delete].nil?
 # --------------------------------------------------------- #
 
 else
-	puts "ID  NAME     DATE"
-	todo.list.each do |t|
-		task = t[1]
+	table(:border => false) do
+		row(header: true, color: 'yellow') do
+			column('ID', align: 'left')
+			column(I18n.t('display.name'), width: 30, align: 'left')
+			column(I18n.t('display.deadline'), width: 30, align: 'left')
+		end
 
-		if task['deadline'].to_s.empty?
-			puts "##{task['id']} #{task['name']} #{task['date_create']}"
-		else
-			deadline = task['deadline']
-			time     = Time.now
+		todo.list.each do |t|
+			task = t[1]
+		
+			row do
+				column(task['id'])
+				column(task['name'])
 
-			if deadline < time
-				puts "##{task['id']} #{task['name']} #{task['date_create']}".red
-			elsif deadline.to_i - time.to_i <= 3 * 24 * 60 * 60 # 3 days
-				puts "##{task['id']} #{task['name']} #{task['date_create']}".blue
-			else
-				puts "##{task['id']} #{task['name']} #{task['date_create']}"
+				deadline = task['deadline']
+				time     = Time.now
+
+				if deadline.to_s.empty?
+					column(I18n.t('display.nothing'))
+				elsif deadline.to_i - time.to_i >= 3 * 24 * 60 * 60 # 3 days
+					column(task['deadline'])
+				elsif deadline < time
+					column(task['deadline'], color: 'red')
+				else
+					column(task['deadline'], color: 'magenta')
+				end
 			end
 		end
 	end
-
 end
 
 exit(0)

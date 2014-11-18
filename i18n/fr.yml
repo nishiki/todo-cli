@@ -7,6 +7,7 @@ fr:
     comment: 'Commentaire'
     date_create: 'Date de création'
     date_update: 'Dernière date de modification'
+    nothing: "Aucune"
 
   error:
     id_unknown: "L'identifiant %{id} est inconnu!"
