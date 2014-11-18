@@ -150,7 +150,7 @@ else
 		if task['deadline'].to_s.empty?
 			puts "##{task['id']} #{task['name']} #{task['date_create']}"
 		else
-			deadline = Time.parse(task['deadline'])
+			deadline = task['deadline']
 			time     = Time.now
 
 			if deadline < time
