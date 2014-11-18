@@ -13,7 +13,7 @@ install:
 	mkdir -p /usr/local/todo-cli
 	cp -r ./lib /usr/local/todo-cli/
 	cp -r ./i18n /usr/local/todo/
-	cp ./mpw /usr/local/todo-cli/
+	cp ./todo-cli /usr/local/todo-cli/
 	ln -snf /usr/local/todo-cli/todo-cli /usr/local/bin/
 
 uninstall:
