@@ -49,7 +49,7 @@ class TodoCli
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => options[:name],
-		                      'deadline'    => options[:deadline],
+		                      'deadline'    => deadline,
 		                      'comment'     => options[:comment],
 		                      'date_create' => Time.now,
 		                     }
