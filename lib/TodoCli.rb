@@ -88,7 +88,7 @@ class TodoCli
 		name     = options[:name].to_s.empty? ? @tasks[id]['name']     : options[:name]
 		comment  = options[:comment].nil?     ? @tasks[id]['comment']  : options[:comment]
 		deadline = options[:deadline].nil?    ? @tasks[id]['deadline'] : options[:deadline]
-		deadline = Time.parse(deadline)
+		deadline = Time.parse(deadline) if not deadline.to_s.empty?
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => name,
