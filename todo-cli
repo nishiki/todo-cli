@@ -104,10 +104,9 @@ elsif not options[:show].nil?
 	if task.empty?
 		puts "#{I18n.t('diplay.error')} #4: #{todo.error_msg}".red
 	else
-		print 'ID: '.yellow
-		puts task['id']
-		print "#{I18n.t('display.name')}: ".yellow
+		print "##{task['id']} ".yellow
 		puts task['name']
+		puts '-' * 20
 		print "#{I18n.t('display.date_create')}: ".yellow
 		puts task['date_create']
 		print "#{I18n.t('display.date_update')}: ".yellow
