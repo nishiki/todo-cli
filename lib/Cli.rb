@@ -47,21 +47,13 @@ class Cli
 			print "#{task['name']} - "
 	
 			print "#{I18n.t('display.progress')}: ".yellow
-			progress = task['progress'].to_i
+			puts "#{task['progress']}%".send(progress_color(task['progress']))
 
-			case progress
-			when 100
-				puts "#{progress}%".green
-			when 1..99
-				puts "#{progress}%".magenta
-			else
-				puts "#{progress}%"
-			end
-
+			
 			puts '-' * 50
 
 			print "#{I18n.t('display.deadline')}: ".yellow
-			puts task['deadline']
+			puts "#{task['deadline']}".send(deadline_color(task['deadline']))
 			print "#{I18n.t('display.comment')}: ".yellow
 			puts task['comment']
 
@@ -121,34 +113,38 @@ class Cli
 				row do
 					column(task['id'])
 					column(task['name'])
-	
-					# Set print progress
-					progress = task['progress'].to_i
-					case progress
-					when 100
-						column("#{progress}%", color: 'green')
-					when 1..99
-						column("#{progress}%", color: 'magenta')
-					else
-						column("#{progress}%")
-					end
-	
-					# Set print Deadline
-					deadline = task['deadline'].to_s
-					time     = Time.now
-	
-					if deadline.to_s.empty?
-						column(I18n.t('display.nothing'))
-					elsif Time.parse(deadline) < time
-						column(task['deadline'], color: 'red')
-					elsif Time.parse(deadline).to_i - time.to_i <= 3 * 24 * 60 * 60 # 3 days
-						column(task['deadline'], color: 'magenta')
-					else
-						column(task['deadline'])
-					end
+					column("#{task['progress']}%", color: progress_color(task['progress']))
+					column(task['deadline'], color: deadline_color(task['deadline']))
 				end
 			end
 		end
+	end
 
+	private
+	def progress_color(progress)
+		case progress.to_i
+		when 100
+			return 'green'
+		when 1..99
+			return 'magenta'
+		else
+			return 'white'
+		end
+	end
+
+	private 
+	def deadline_color(deadline)
+		time     = Time.now
+		deadline = deadline.to_s
+	
+		if deadline.empty?
+			return 'white'
+		elsif Time.parse(deadline) < time
+			return 'red'
+		elsif Time.parse(deadline).to_i - time.to_i <= 3 * 24 * 60 * 60 # 3 days
+			return 'magenta'
+		else
+			return 'white'
+		end
 	end
 end
