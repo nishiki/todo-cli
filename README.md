@@ -7,6 +7,7 @@ You can create a simple tasks with:
 * a name
 * a comment
 * a deadline
+* a progress
 
 ## Install
 
