@@ -15,7 +15,7 @@ require 'command_line_reporter'
 include CommandLineReporter
 
 APP_ROOT = File.dirname(Pathname.new(__FILE__).realpath)
-require "#{APP_ROOT}/lib/TodoCli"
+require "#{APP_ROOT}/lib/Tasks"
 
 # --------------------------------------------------------- #
 # Set local
@@ -79,9 +79,9 @@ end.parse!
 # Main
 # --------------------------------------------------------- #
 
-todo = TodoCli.new
+tasks = Tasks.new
 
-if not todo.load
+if not tasks.load
 	puts "#{I18n.t('display.error')} #1: #{todo.error_msg}"
 	exit(3)
 end
@@ -90,8 +90,8 @@ end
 # --------------------------------------------------------- #
 
 if not options[:add].nil?
-	if todo.add(data)
-		if todo.save
+	if tasks.add(data)
+		if tasks.save
 			puts I18n.t('success.add').green
 		else
 			puts "#{I18n.t('display.error')} #2: #{todo.error_msg}".red
@@ -104,7 +104,7 @@ if not options[:add].nil?
 # --------------------------------------------------------- #
 
 elsif not options[:show].nil?
-	task = todo.show(options[:show])
+	task = tasks.show(options[:show])
 	if task.empty?
 		puts "#{I18n.t('diplay.error')} #4: #{todo.error_msg}".red
 	else
@@ -143,8 +143,8 @@ elsif not options[:show].nil?
 # --------------------------------------------------------- #
 
 elsif not options[:update].nil?
-	if todo.update(options[:update], data)
-		if todo.save
+	if tasks.update(options[:update], data)
+		if tasks.save
 			puts I18n.t('success.update', id: options[:update]).green
 		else
 			puts "#{I18n.t('display.error')} #6: #{todo.error_msg}".red
@@ -157,8 +157,8 @@ elsif not options[:update].nil?
 # --------------------------------------------------------- #
 
 elsif not options[:delete].nil?
-	if todo.delete(options[:delete])
-		if todo.save
+	if tasks.delete(options[:delete])
+		if tasks.save
 			puts I18n.t('success.delete', id: options[:delete]).green
 		else
 			puts "#{I18n.t('display.error')} #8: #{todo.error_msg}".red
@@ -179,7 +179,7 @@ else
 			column(I18n.t('display.deadline'), width: 30, align: 'left')
 		end
 
-		todo.list.each do |t|
+		tasks.list.each do |t|
 			task = t[1]
 		
 			row do

@@ -6,7 +6,7 @@ require 'yaml'
 require 'i18n'
 require 'time'
 
-class TodoCli
+class Tasks
 
 	attr_accessor :error_msg
 
