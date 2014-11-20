@@ -3,6 +3,7 @@ fr:
     error: 'Erreur'
     name: 'Nom'
     deadline: 'Deadline'
+    progress: 'Progression'
     group: 'Groupe'
     comment: 'Commentaire'
     date_create: 'Date de création'
@@ -25,6 +26,7 @@ fr:
     show: "Afficher toutes les informations d'une tâche"
     update: 'Mettre à jour une tâche'
     delete: 'Supprimer une tâche'
-    name: 'Fixer le nom' 
-    comment: 'Fixer un commentaire' 
-    deadline: 'Fixer une deadline [ex: 2014-11-27 20:30:59]' 
+    name: 'Fixer le nom de la tâche' 
+    comment: 'Fixer un commentaire à la tâche' 
+    progress: 'Fixer la progression de la tâche en pourcentage'
+    deadline: 'Fixer une deadline à la tâche [ex: 2014-11-27 20:30:59]' 

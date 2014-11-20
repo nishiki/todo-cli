@@ -45,11 +45,14 @@ class TodoCli
 		end
 
 		id       = @tasks.empty?           ? 1   : @tasks.to_a.last[0] + 1
-		deadline = options[:deadline].nil? ? nil : Time.parse(options[:deadline])
+		progress = options[:progress].to_i
+		progress = 0                              if not progress.between?(0, 100) 
+		deadline = Time.parse(options[:deadline]) if not options[:deadline].nil?
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => options[:name],
 		                      'deadline'    => deadline,
+		                      'progress'    => progress,
 		                      'comment'     => options[:comment],
 		                      'date_create' => Time.now,
 		                     }
@@ -87,12 +90,17 @@ class TodoCli
 
 		name     = options[:name].to_s.empty? ? @tasks[id]['name']     : options[:name]
 		comment  = options[:comment].nil?     ? @tasks[id]['comment']  : options[:comment]
+		progress = options[:progress].nil?    ? @tasks[id]['progress'] : options[:progress]
 		deadline = options[:deadline].nil?    ? @tasks[id]['deadline'] : options[:deadline]
+		progress = options[:progress].nil?    ? @tasks[id]['progress'] : options[:progress]
+
 		deadline = Time.parse(deadline) if not deadline.to_s.empty?
+		progress = 0                    if not progress.to_i.between?(0, 100) 
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => name,
 		                      'deadline'    => deadline,
+		                      'progress'    => progress,
 		                      'comment'     => comment,
 		                      'date_create' => @tasks[id]['date_create'],
 		                      'date_update' => Time.now,

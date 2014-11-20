@@ -3,6 +3,7 @@ en:
     error: 'Error'
     name: 'Name'
     deadline: 'Deadline'
+    progress: 'Progress'
     group: 'Group'
     comment: 'Comment'
     date_create: 'Create date'
@@ -27,4 +28,5 @@ en:
     delete: 'Delete a task'
     name: 'Set the name' 
     comment: 'Set a comment' 
+    progress: 'Set the progress in percent'
     deadline: 'Set a deadline [ie: 2014-11-27 20:30:59]' 

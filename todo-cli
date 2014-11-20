@@ -66,6 +66,10 @@ OptionParser.new do |opts|
 		data[:comment] = comment
 	end
 
+	opts.on('-p', '--progress NUMBER', I18n.t('option.progress')) do |progress|
+		data[:progress] = progress
+	end
+
 	opts.on('-d', '--deadline DATE', I18n.t('option.deadline')) do |deadline|
 		data[:deadline] = deadline
 	end
@@ -104,17 +108,35 @@ elsif not options[:show].nil?
 	if task.empty?
 		puts "#{I18n.t('diplay.error')} #4: #{todo.error_msg}".red
 	else
-		print "##{task['id']} ".yellow
-		puts task['name']
-		puts '-' * 20
-		print "#{I18n.t('display.date_create')}: ".yellow
-		puts task['date_create']
-		print "#{I18n.t('display.date_update')}: ".yellow
-		puts task['date_update']
+		print "##{task['id']} - ".yellow
+		print "#{task['name']} - "
+
+		print "#{I18n.t('display.progress')}: ".yellow
+		progress = task['progress'].to_i
+		case progress
+		when 100
+			puts "#{progress}%".green
+		when 1..99
+			puts "#{progress}%".magenta
+		else
+			puts "#{progress}%"
+		end
+
+		puts '-' * 50
+
 		print "#{I18n.t('display.deadline')}: ".yellow
 		puts task['deadline']
 		print "#{I18n.t('display.comment')}: ".yellow
 		puts task['comment']
+
+		puts '-' * 50
+
+		print "#{I18n.t('display.date_create')}: ".yellow
+		puts task['date_create']
+		print "#{I18n.t('display.date_update')}: ".yellow
+		puts task['date_update']
+
+		puts '-' * 50
 	end
 
 # Update a task
@@ -153,6 +175,7 @@ else
 		row(header: true, color: 'yellow') do
 			column('ID', align: 'left')
 			column(I18n.t('display.name'), width: 30, align: 'left')
+			column(I18n.t('display.progress'), width: 20, align: 'left')
 			column(I18n.t('display.deadline'), width: 30, align: 'left')
 		end
 
@@ -163,6 +186,18 @@ else
 				column(task['id'])
 				column(task['name'])
 
+				# Set print progress
+				progress = task['progress'].to_i
+				case progress
+				when 100
+					column("#{progress}%", color: 'green')
+				when 1..99
+					column("#{progress}%", color: 'magenta')
+				else
+					column("#{progress}%")
+				end
+
+				# Set print Deadline
 				deadline = task['deadline'].to_s
 				time     = Time.now
 
