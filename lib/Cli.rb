@@ -105,9 +105,9 @@ class Cli
 	def list(options={})
 		table(border: false) do
 			row(header: true, color: 'yellow') do
-				column('ID', align: 'left')
-				column(I18n.t('display.name'), width: 20, align: 'left')
-				column(I18n.t('display.group'), width: 15, align: 'left')
+				column('ID', align: 'left', width: 5)
+				column(I18n.t('display.group'), width: 20, align: 'left')
+				column(I18n.t('display.name'), width: 40, align: 'left')
 				column(I18n.t('display.progress'), width: 20, align: 'left')
 				column(I18n.t('display.deadline'), width: 30, align: 'left')
 			end
@@ -117,8 +117,8 @@ class Cli
 			
 				row do
 					column(task['id'])
-					column(task['name'])
 					column(task['group'])
+					column(task['name'])
 					column("#{task['progress']}%", color: progress_color(task['progress']))
 					column(task['deadline'], color: deadline_color(task['deadline']))
 				end
