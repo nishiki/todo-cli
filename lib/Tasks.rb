@@ -94,8 +94,8 @@ class Tasks
 		deadline = options[:deadline].nil?    ? @tasks[id]['deadline'] : options[:deadline]
 		progress = options[:progress].nil?    ? @tasks[id]['progress'] : options[:progress]
 
-		deadline = Time.parse(deadline) if not deadline.to_s.empty?
-		progress = 0                    if not progress.to_i.between?(0, 100) 
+		deadline = Time.parse(deadline.to_s) if not deadline.to_s.empty?
+		progress = 0                         if not progress.to_i.between?(0, 100) 
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => name,
