@@ -22,11 +22,13 @@ fr:
     delete: 'La tâche %{id} a bien été supprimée!' 
 
   option:
+    usage: 'Usage'
     add: "Ajouter une nouvelle tâche"
     show: "Afficher toutes les informations d'une tâche"
     update: 'Mettre à jour une tâche'
     delete: 'Supprimer une tâche'
     name: 'Fixer le nom de la tâche' 
+    group: 'Fixer le groupe ou filter sur le groupe'
     comment: 'Fixer un commentaire à la tâche' 
     progress: 'Fixer la progression de la tâche en pourcentage'
     deadline: 'Fixer une deadline à la tâche [ex: 2014-11-27 20:30:59]' 

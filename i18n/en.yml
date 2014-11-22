@@ -22,11 +22,13 @@ en:
     delete: 'The task %{id} has been successfully deleted!' 
 
   option:
+    usage: 'Usage'
     add: 'Add a new task'
     show: "Show all task's information"
     update: 'Update a task'
     delete: 'Delete a task'
     name: 'Set the name' 
+    group: 'Set the group or filter on the group'
     comment: 'Set a comment' 
     progress: 'Set the progress in percent'
     deadline: 'Set a deadline [ie: 2014-11-27 20:30:59]' 

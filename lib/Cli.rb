@@ -46,6 +46,9 @@ class Cli
 			print "##{task['id']} - ".yellow
 			print "#{task['name']} - "
 	
+			print "#{I18n.t('display.group')}: ".yellow
+			print "#{task['group']} - "
+
 			print "#{I18n.t('display.progress')}: ".yellow
 			puts "#{task['progress']}%".send(progress_color(task['progress']))
 
@@ -98,21 +101,24 @@ class Cli
 	end
 
 	# List all tasks
-	def list
+	# @args: options -> filter for list
+	def list(options={})
 		table(border: false) do
 			row(header: true, color: 'yellow') do
 				column('ID', align: 'left')
-				column(I18n.t('display.name'), width: 30, align: 'left')
+				column(I18n.t('display.name'), width: 20, align: 'left')
+				column(I18n.t('display.group'), width: 15, align: 'left')
 				column(I18n.t('display.progress'), width: 20, align: 'left')
 				column(I18n.t('display.deadline'), width: 30, align: 'left')
 			end
 	
-			@tasks.list.each do |t|
+			@tasks.list(options).each do |t|
 				task = t[1]
 			
 				row do
 					column(task['id'])
 					column(task['name'])
+					column(task['group'])
 					column("#{task['progress']}%", color: progress_color(task['progress']))
 					column(task['deadline'], color: deadline_color(task['deadline']))
 				end

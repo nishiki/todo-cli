@@ -44,13 +44,14 @@ class Tasks
 			return false
 		end
 
-		id       = @tasks.empty?           ? 1   : @tasks.to_a.last[0] + 1
+		id       = @tasks.empty? ? 1 : @tasks.to_a.last[0] + 1
 		progress = options[:progress].to_i
 		progress = 0                              if not progress.between?(0, 100) 
 		deadline = Time.parse(options[:deadline]) if not options[:deadline].nil?
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => options[:name],
+		                      'group'       => options[:group],
 		                      'deadline'    => deadline,
 		                      'progress'    => progress,
 		                      'comment'     => options[:comment],
@@ -89,6 +90,7 @@ class Tasks
 		end
 
 		name     = options[:name].to_s.empty? ? @tasks[id]['name']     : options[:name]
+		group    = options[:group].nil?       ? @tasks[id]['group']    : options[:group]
 		comment  = options[:comment].nil?     ? @tasks[id]['comment']  : options[:comment]
 		progress = options[:progress].nil?    ? @tasks[id]['progress'] : options[:progress]
 		deadline = options[:deadline].nil?    ? @tasks[id]['deadline'] : options[:deadline]
@@ -99,6 +101,7 @@ class Tasks
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => name,
+		                      'group'       => group,
 		                      'deadline'    => deadline,
 		                      'progress'    => progress,
 		                      'comment'     => comment,
@@ -125,8 +128,13 @@ class Tasks
 
 	# List all tasks
 	# @rtrn: return an array of hash
-	def list
-		return @tasks.to_a
+	def list(options={})
+		tasks = @tasks.to_a
+		if not options[:group].nil?
+			tasks.delete_if {|t| t[1]['group'] != options[:group]}	
+		end
+
+		return tasks
 	end
 
 	# Save the tasks in file

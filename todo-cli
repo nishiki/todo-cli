@@ -57,6 +57,11 @@ OptionParser.new do |opts|
 		data[:name] = name
 	end
 
+	opts.on('-g', '--group GROUP', I18n.t('option.group')) do |group|
+		data[:group]    = group
+		options[:group] = group
+	end
+
 	opts.on('-c', '--comment COMMENT', I18n.t('option.comment')) do |comment|
 		data[:comment] = comment
 	end
@@ -104,7 +109,7 @@ elsif not options[:delete].nil?
 # --------------------------------------------------------- #
 
 else
-	cli.list
+	cli.list(options)
 end
 
 exit(0)
