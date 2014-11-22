@@ -17,7 +17,7 @@ class Cli
 		@tasks = Tasks.new
 
 		if not @tasks.load
-			puts "#{I18n.t('display.error')} #1: #{todo.error_msg}"
+			puts "#{I18n.t('display.error')} #1: #{@tasks.error_msg}"
 			exit(3)
 		end
 	end
@@ -29,10 +29,10 @@ class Cli
 			if @tasks.save
 				puts I18n.t('success.add').green
 			else
-				puts "#{I18n.t('display.error')} #2: #{todo.error_msg}".red
+				puts "#{I18n.t('display.error')} #2: #{@tasks.error_msg}".red
 			end
 		else
-			puts "#{I18n.t('display.error')} #3: #{todo.error_msg}".red
+			puts "#{I18n.t('display.error')} #3: #{@tasks.error_msg}".red
 		end
 	end
 
@@ -41,7 +41,7 @@ class Cli
 	def show(id)
 		task = @tasks.show(id)
 		if task.empty?
-			puts "#{I18n.t('diplay.error')} #4: #{todo.error_msg}".red
+			puts "#{I18n.t('diplay.error')} #4: #{@tasks.error_msg}".red
 		else
 			print "##{task['id']} - ".yellow
 			print "#{task['name']} - "
@@ -79,10 +79,10 @@ class Cli
 			if @tasks.save
 				puts I18n.t('success.update', id: id).green
 			else
-				puts "#{I18n.t('display.error')} #6: #{todo.error_msg}".red
+				puts "#{I18n.t('display.error')} #6: #{@tasks.error_msg}".red
 			end
 		else
-			puts "#{I18n.t('display.error')} #7: #{todo.error_msg}".red
+			puts "#{I18n.t('display.error')} #7: #{@tasks.error_msg}".red
 		end
 	end
 
@@ -93,10 +93,10 @@ class Cli
 			if @tasks.save
 				puts I18n.t('success.delete', id: id).green
 			else
-				puts "#{I18n.t('display.error')} #8: #{todo.error_msg}".red
+				puts "#{I18n.t('display.error')} #8: #{@tasks.error_msg}".red
 			end
 		else
-			puts "#{I18n.t('display.error')} #9: #{todo.error_msg}".red
+			puts "#{I18n.t('display.error')} #9: #{@tasks.error_msg}".red
 		end
 	end
 
