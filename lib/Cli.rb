@@ -66,6 +66,8 @@ class Cli
 			puts task['date_create']
 			print "#{I18n.t('display.date_update')}: ".yellow
 			puts task['date_update']
+			print "#{I18n.t('display.date_finish')}: ".yellow
+			puts task['date_finish']
 
 			puts '-' * 50
 		end

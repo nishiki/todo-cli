@@ -44,10 +44,12 @@ class Tasks
 			return false
 		end
 
-		id       = @tasks.empty? ? 1 : @tasks.to_a.last[0] + 1
 		progress = options[:progress].to_i
 		progress = 0                              if not progress.between?(0, 100) 
 		deadline = Time.parse(options[:deadline]) if not options[:deadline].nil?
+
+		date_finish = progress == 100 ? Time.now : nil
+		id          = @tasks.empty?   ? 1        : @tasks.to_a.last[0] + 1
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => options[:name],
@@ -56,6 +58,7 @@ class Tasks
 		                      'progress'    => progress,
 		                      'comment'     => options[:comment],
 		                      'date_create' => Time.now,
+		                      'date_finish' => date_finish,
 		                     }
 		              }
 		             )
@@ -96,8 +99,9 @@ class Tasks
 		deadline = options[:deadline].nil?    ? @tasks[id]['deadline'] : options[:deadline]
 		progress = options[:progress].nil?    ? @tasks[id]['progress'] : options[:progress]
 
-		deadline = Time.parse(deadline.to_s) if not deadline.to_s.empty?
-		progress = 0                         if not progress.to_i.between?(0, 100) 
+		deadline    = Time.parse(deadline.to_s) if not deadline.to_s.empty?
+		progress    = 0                         if not progress.to_i.between?(0, 100) 
+		date_finish = progress.to_i == 100 ? Time.now : nil
 
 		@tasks.merge!({id => {'id'          => id,
 		                      'name'        => name,
@@ -107,6 +111,7 @@ class Tasks
 		                      'comment'     => comment,
 		                      'date_create' => @tasks[id]['date_create'],
 		                      'date_update' => Time.now,
+		                      'date_finish' => date_finish,
 		                     }
 		              }
 		             )

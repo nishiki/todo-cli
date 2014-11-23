@@ -8,6 +8,7 @@ en:
     comment: 'Comment'
     date_create: 'Create date'
     date_update: 'Last update date'
+    date_finish: 'Finish date'
     nothing: 'Nothing'
 
   error:

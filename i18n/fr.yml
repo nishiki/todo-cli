@@ -8,6 +8,7 @@ fr:
     comment: 'Commentaire'
     date_create: 'Date de création'
     date_update: 'Dernière modification'
+    date_finish: 'Fini le'
     nothing: "Aucune"
 
   error:
