@@ -9,12 +9,19 @@ require 'pathname'
 require 'command_line_reporter'
 include CommandLineReporter
 require "#{APP_ROOT}/lib/Tasks"
+require "#{APP_ROOT}/lib/Config"
 
 class Cli
 
 	# Constructor
 	def initialize
-		@tasks = Tasks.new
+		@config = TodoCli::Config.new 
+		@tasks  = Tasks.new
+
+		if not @config.checkconfig
+			puts "#{I18n.t('display.error')} #1: #{@tasks.error_msg}"
+			exit(3)
+		end
 
 		if not @tasks.load
 			puts "#{I18n.t('display.error')} #1: #{@tasks.error_msg}"
@@ -144,12 +151,13 @@ class Cli
 	def deadline_color(deadline)
 		time     = Time.now
 		deadline = deadline.to_s
+		puts @config.deadline_limit
 	
 		if deadline.empty?
 			return 'white'
 		elsif Time.parse(deadline) < time
 			return 'red'
-		elsif Time.parse(deadline).to_i - time.to_i <= 3 * 24 * 60 * 60 # 3 days
+		elsif Time.parse(deadline).to_i - time.to_i <= @config.deadline_limit
 			return 'magenta'
 		else
 			return 'white'
